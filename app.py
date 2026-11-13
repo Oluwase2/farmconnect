@@ -109,6 +109,11 @@ def open_listing(lid, contact=False):
     st.session_state.show_contact = contact
 
 def marketplace():
+    marketplace_main()
+    if st.session_state.detail_id is None:
+       show_reviews()
+
+  def marketplace_main()
     total, kinds = db.stats()
     st.markdown(f"<div class='fc-hero' style=\"{images.hero_style()}\"><h1>🌾 FarmConnect</h1><p>A prototype marketplace that connects "
                 "smallholder farmers with produce buyers across Nigeria — farmers list produce through a "
@@ -117,7 +122,7 @@ def marketplace():
         show_detail(st.session_state.detail_id)
         return
 
-    show_reviews()
+    
     m1, m2 = st.columns(2)
     m1.metric("Active listings", total)
     m2.metric("Produce types", kinds)
