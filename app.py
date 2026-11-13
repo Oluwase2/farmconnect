@@ -7,6 +7,9 @@ import db
 import images
 
 st.set_page_config(page_title="FarmConnect", page_icon="🌾", layout="wide")
+SAMPLE_REVIEWS = [("Ebenezer", "The produce were fresh."),
+                  ("ayomide", "easy to find what i needed."),
+                  ("anonymous", "Good quality yams, exactly as described."),]
 
 CSS = """
 <style>
@@ -285,6 +288,11 @@ def manage():
                         _, e = safe(db.delete_listing, r["id"])
                         st.error(e) if e else st.rerun()
     st.divider()
+    st.subheader("What buyers say")
+    st.caption("Sample reviews for demonstration only")
+    for name, text in SAMPLE_REVIEWS:
+        st.markdown(f"⭐⭐⭐⭐⭐ **{name}**  \n{text}")
+
     st.subheader("Demonstration data")
     a, b = st.columns(2)
     if a.button("Reload sample listings"):
