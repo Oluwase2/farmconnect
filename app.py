@@ -10,6 +10,13 @@ st.set_page_config(page_title="FarmConnect", page_icon="🌾", layout="wide")
 SAMPLE_REVIEWS = [("Ebenezer", "The produce were fresh."),
                   ("ayomide", "easy to find what i needed."),
                   ("anonymous", "Good quality yams, exactly as described."),]
+def show_reviews():
+    st.divider()
+    st.subheader("What buyers say")
+    st.caption("Sample reviews for demonstration only")
+    for name, text in SAMPLE_REVIEWS:
+        st.markdown(f"⭐⭐⭐⭐⭐ **{name}**  \n{text}")
+
 
 CSS = """
 <style>
@@ -109,6 +116,8 @@ def marketplace():
     if st.session_state.detail_id is not None:
         show_detail(st.session_state.detail_id)
         return
+
+    show_reviews()
     m1, m2 = st.columns(2)
     m1.metric("Active listings", total)
     m2.metric("Produce types", kinds)
@@ -287,12 +296,7 @@ def manage():
                     if st.button("🗑️ Delete permanently", key=f"d{r['id']}"):
                         _, e = safe(db.delete_listing, r["id"])
                         st.error(e) if e else st.rerun()
-    st.divider()
-    st.subheader("What buyers say")
-    st.caption("Sample reviews for demonstration only")
-    for name, text in SAMPLE_REVIEWS:
-        st.markdown(f"⭐⭐⭐⭐⭐ **{name}**  \n{text}")
-
+    
     st.subheader("Demonstration data")
     a, b = st.columns(2)
     if a.button("Reload sample listings"):
